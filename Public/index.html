@@ -1,43 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cloud Storage with QR Code</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Storage with QR Code</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
 <body>
+<script src="main.js"></script>
+
 <div class="container mt-5">
-    <h1 class="mb-4">Upload a File</h1>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
+    <h1 class="mb-4">Upload Files</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="file">Choose a File:</label>
-            <input type="file" class="form-control-file" id="file" name="file">
+            <label for="files">Choose Files:</label>
+            <input type="file" class="form-control-file" id="files" name="files" multiple>
         </div>
         <button type="submit" class="btn btn-primary">Upload</button>
     </form>
 
-    <h2 class="mt-5">QR Code</h2>
-    <div id="qrCode" class="mt-3"></div>
+    <h2 class="mt-5">QR Codes</h2>
+    <div id="qrCodes" class="mt-3"></div>
+
+    <h2 class="mt-5">Uploaded Files</h2>
+    <ul id="fileList" class="list-group mt-3"></ul>
+    <button id="deleteSelectedButton" class="btn btn-danger btn-sm mt-3">Delete Selected</button>
 </div>
 
 
-<script>
-    const form = document.querySelector('form');
-    const qrCodeDiv = document.getElementById('qrCode');
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(form);
-        const response = await fetch('/upload', {
-            method: 'POST',
-            body: formData
-        });
-
-        const data = await response.json();
-        qrCodeDiv.innerHTML = `<img src="${data.qrDataURL}" alt="QR Code">`;
-    });
-</script>
 </body>
 </html>
